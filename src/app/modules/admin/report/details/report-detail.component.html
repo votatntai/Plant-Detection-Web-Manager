@@ -1,0 +1,44 @@
+<div class="flex flex-col flex-auto -m-6">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 shadow bg-primary">
+        <span class="text-white font-medium truncate">
+            {{ report.label }}
+        </span>
+        <div>
+            <button mat-icon-button (click)="matDialogRef.close()" [tabIndex]="-1">
+                <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <fuse-alert *ngIf="report.status == 'Rejected'" class="w-full" type="warn">{{ report.note }}</fuse-alert>
+
+    <div class="flex flex-col sm:flex-row gap-8 flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8 w-full">
+        <div class="flex flex-col gap-4 w-full">
+            <div class="flex items-center w-full">
+                <img [src]="report.imageUrl" class="h-80 w-80 rounded-md object-cover" alt="">
+            </div>
+        </div>
+        <div class="flex w-full flex-col font-medium min-h-120 max-h-180 overflow-scroll">
+            <div class="mb-3">
+                <div class="text-secondary font-bold">Label</div>
+                <div class="italic">{{ report.label }}</div>
+            </div>
+            <div class="mb-3">
+                <div class="text-secondary font-bold">Create at</div>
+                <div>{{ report.createAt | date:'dd-MM-YYYY' }}</div>
+            </div>
+            <div class="mb-3">
+                <div class="text-secondary font-bold">Description</div>
+                <div class="italic">{{ report.description }}</div>
+            </div>
+            <div *ngIf="report.status == 'Pending'">
+                <div class="flex gap-4 justify-between mt-4">
+                    <button mat-raised-button color="warn" class="w-full" (click)="rejectReport()">REJECT</button>
+                    <button mat-raised-button color="primary" class="w-full" (click)="approveReport()">APPROVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

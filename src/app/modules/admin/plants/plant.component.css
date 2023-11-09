@@ -1,0 +1,48 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .plant-grid {
+        grid-template-columns: 72px 126px 96px auto;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .plant-grid {
+        grid-template-columns: 72px 164px 48px 48px auto 48px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .plant-grid {
+        grid-template-columns: 72px 196px 96px 124px auto 48px;
+    }
+}
+
+/* Large devices (laptops/desktops, 960px and up) */
+@media only screen and (min-width: 960px) {
+    .plant-grid {
+        grid-template-columns: 72px 196px 96px 64px auto 48px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1280px and up) */
+@media only screen and (min-width: 1280px) {
+    .plant-grid {
+        grid-template-columns: 96px auto 196px 96px 96px 96px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1520px and up) */
+@media only screen and (min-width: 1520px) {
+    .plant-grid {
+        grid-template-columns: 96px auto 148px 96px 196px 168px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+@media only screen and (min-width: 1660px) {
+    .plant-grid {
+        grid-template-columns: 96px auto 196px 196px 196px 168px;
+    }
+}

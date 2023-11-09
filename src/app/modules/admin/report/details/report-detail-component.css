@@ -1,0 +1,48 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .class-student-grid {
+        grid-template-columns: 96px 96px 96px auto;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .class-student-grid {
+        grid-template-columns: 96px 96px auto 96px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .class-student-grid {
+        grid-template-columns: 96px 96px auto 168px;
+    }
+}
+
+/* Large devices (laptops/desktops, 960px and up) */
+@media only screen and (min-width: 960px) {
+    .class-student-grid {
+        grid-template-columns: 96px 196px auto 196px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1280px and up) */
+@media only screen and (min-width: 1280px) {
+    .class-student-grid {
+        grid-template-columns: 96px 196px auto 196px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1520px and up) */
+@media only screen and (min-width: 1520px) {
+    .class-student-grid {
+        grid-template-columns: 96px 196px auto 196px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+@media only screen and (min-width: 1660px) {
+    .class-student-grid {
+        grid-template-columns: 96px 168px auto 168px;
+    }
+}

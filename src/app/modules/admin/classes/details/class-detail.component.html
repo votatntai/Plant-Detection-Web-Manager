@@ -1,0 +1,128 @@
+<div class="flex flex-col flex-auto -m-6 ">
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 shadow bg-primary">
+        <span class="text-white font-medium truncate">
+            {{ class.name }}
+        </span>
+        <div>
+            <button mat-icon-button (click)="matDialogRef.close()" [tabIndex]="-1">
+                <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-h-200 overflow-scroll">
+
+        <div class="flex gap-8 flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8 w-full">
+            <div class="flex flex-row gap-4 items-center w-full">
+                <div class="flex flex-col w-full">
+                    <div class="flex flex-col">
+                        <qrcode [qrdata]="class.code" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+                    </div>
+                    <div class="flex gap-4 w-full filter-info py-3">
+                        <img class="w-16 h-16 rounded-full" [src]="class.manager.avatarUrl" alt="Card cover image">
+                        <div class="flex flex-col">
+                            <div class="text-md leading-tight text-primary">Manager</div>
+                            <div class="text-2xl font-semibold leading-tight">{{ class.manager.firstName }} {{
+                                class.manager.lastName }}</div>
+                            <div class="text-md text-secondary">{{ class.manager.email }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex w-full flex-col mt-4 divide-y font-medium">
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Name</div>
+                    <div>{{ class.name }}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Maximum members</div>
+                    <div>{{ class.numberOfMember }}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Create at</div>
+                    <div>{{ class.createAt | date:'dd-MM-YYYY' }}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div>Status</div>
+                    <div class="flex items-center gap-3">
+                        <ng-container *ngIf="class.status == 'Opening'">
+                            <button class="flex items-center">
+                                <mat-icon svgIcon="heroicons_outline:lock-closed"></mat-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="class.status == 'Closed'">
+                            <button class="flex items-center">
+                                <mat-icon svgIcon="heroicons_outline:lock-open"></mat-icon>
+                            </button>
+                        </ng-container>
+                        <div [class]="class.status | classStatusStyle">{{ class.status }}</div>
+                    </div>
+                </div>
+                <div class="py-3">Description</div>
+                <div class="py-3" [innerHTML]="class.description"></div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="class.status == 'Rejected'">
+            <fuse-alert type="warn">{{ class.note }}</fuse-alert>
+        </ng-container>
+
+        <ng-container *ngIf="classStudents && classStudents.length > 0">
+            <div class="text-lg font-bold text-secondary py-4 pl-8">Students</div>
+
+            <div class="grid mb-8">
+                <!-- Header -->
+                <div
+                    class="class-student-grid z-10 sticky top-0 text-center grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                    <div class="hidden sm:block">
+                        Avatar
+                    </div>
+                    <div class="hidden sm:block">
+                        Name
+                    </div>
+                    <div class="hidden sm:block">
+                        Email
+                    </div>
+                    <div class="hidden sm:block">
+                        Status
+                    </div>
+                </div>
+
+                <ng-container *ngFor="let classStudent of classStudents">
+
+                    <div class="class-student-grid grid text-center items-center gap-4 py-3 px-6 md:px-8 border-b">
+
+                        <!-- Name -->
+                        <div class="hidden sm:block">
+                            <img class="w-8 h-8 ml-8 rounded-full" [src]="classStudent.student.avatarUrl"
+                                alt="Student avatar">
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="hidden sm:block truncate">
+                            {{ classStudent.student.firstName }} {{ classStudent.student.lastName }}
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="hidden sm:block">
+                            {{ classStudent.student.email }}
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="hidden sm:block">
+                            <!-- <span class="border-2 border-green-700 px-3 rounded-full py-1 text-green-700"> -->
+                            <span [class]="classStudent.status | classStudentStatusStyle">
+                                {{ classStudent.status }}
+                            </span>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+
+
+        </ng-container>
+    </div>
+
+</div>

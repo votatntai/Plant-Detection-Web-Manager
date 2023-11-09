@@ -1,0 +1,48 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .class-grid {
+        grid-template-columns: 72px auto 72px 96px 96px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .class-grid {
+        grid-template-columns: 72px auto 72px 96px 72px 96px 48px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .class-grid {
+        grid-template-columns: 72px auto 196px 196px 124px 48px;
+    }
+}
+
+/* Large devices (laptops/desktops, 960px and up) */
+@media only screen and (min-width: 960px) {
+    .class-grid {
+        grid-template-columns: 72px auto 168px 112px 196px 296px 112px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1280px and up) */
+@media only screen and (min-width: 1280px) {
+    .class-grid {
+        grid-template-columns: 96px auto 248px 96px 196px 296px 112px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1520px and up) */
+@media only screen and (min-width: 1520px) {
+    .class-grid {
+        grid-template-columns: 96px auto 248px 112px 196px 296px 112px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+@media only screen and (min-width: 1660px) {
+    .class-grid {
+        grid-template-columns: 96px auto 268px 168px 168px 296px 168px;
+    }
+}

@@ -1,0 +1,79 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Create Plant</div>
+        <button mat-icon-button (click)="saveAndClose()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Compose form -->
+    <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="createPlantForm">
+
+        <!-- Name -->
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput [formControlName]="'name'">
+        </mat-form-field>
+
+        <!-- Code -->
+        <mat-form-field>
+            <mat-label>Code</mat-label>
+            <input matInput [formControlName]="'code'">
+        </mat-form-field>
+
+        <!-- Category -->
+        <mat-form-field>
+            <mat-select [value]="'Cây thân gỗ'">
+                <mat-option value="Cây thân gỗ">Cây thân gỗ</mat-option>
+                <mat-option value="In Progress">In Progress</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Body -->
+        <quill-editor class="mt-2" [formControlName]="'description'" [bounds]="'self'"
+            [modules]="quillModules"></quill-editor>
+
+        <div class="py-4">
+            <h1 class="text-secondary font-semibold mb-4">Select 5 Images</h1>
+            <div class="flex flex-row gap-4 justify-between flex-wrap">
+                <label *ngFor="let image of selectedImages; let i = index">
+                    <input type="file" [id]="'fileInput' + i" #fileInput style="display: none"
+                        (change)="onSelectFile($event, i)" accept="image/*">
+                    <div class="h-40 w-40 cursor-pointer flex items-center justify-center bg-gray-100 rounded-lg">
+                        <label for="fileInput{{i}}">
+                            <div *ngIf="!imageSelected[i]">
+                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                </svg>
+                            </div>
+                        </label>
+                        <img class="h-40 w-40 rounded-lg" [src]="objectURLs[i] || ''" *ngIf="image"
+                            alt="Uploaded Image">
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">
+            <div class="-ml-2">
+                <!-- Attach file -->
+                <button mat-icon-button>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:paper-clip'"></mat-icon>
+                </button>
+            </div>
+
+            <div class="flex items-center mt-4 sm:mt-0">
+                <!-- Send -->
+                <button class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="onSubmit()">
+                    Send
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

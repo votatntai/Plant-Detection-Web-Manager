@@ -1,0 +1,179 @@
+<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+    <div
+        class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+            <!-- Logo -->
+            <div class="w-12">
+                <img src="assets/images/logo/logo.svg">
+            </div>
+
+            <!-- Title -->
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
+            <div class="flex items-baseline mt-0.5 font-medium">
+                <div>Using your manager account to login!</div>
+                <!-- <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['/sign-up']">Sign up
+                </a> -->
+            </div>
+
+            <!-- Alert -->
+            <!-- <fuse-alert class="mt-8" [appearance]="'outline'" [showIcon]="false" [type]="'info'">
+                You are browsing <strong>Fuse Demo</strong>. Click on the "Sign in" button to access the Demo and
+                Documentation.
+            </fuse-alert> -->
+
+            <!-- Alert -->
+            <fuse-alert class="mt-8" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
+                [@shake]="alert.type === 'error'">
+                {{alert.message}}
+            </fuse-alert>
+
+            <!-- Sign in form -->
+            <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
+
+                <!-- Email field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Email address</mat-label>
+                    <input id="email" matInput [formControlName]="'email'">
+                    <mat-error *ngIf="signInForm.get('email').hasError('required')">
+                        Email address is required
+                    </mat-error>
+                    <mat-error *ngIf="signInForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Password</mat-label>
+                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <button mat-icon-button type="button"
+                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                        matSuffix>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                    </button>
+                    <mat-error>
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Actions -->
+                <div class="inline-flex items-center justify-between w-full mt-1.5">
+                    <mat-checkbox class="-ml-2" [color]="'primary'" [formControlName]="'rememberMe'">
+                        Remember me
+                    </mat-checkbox>
+                    <a class="text-md font-medium text-primary-500 hover:underline"
+                        [routerLink]="['/forgot-password']">Forgot password?
+                    </a>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
+                    [disabled]="signInForm.disabled" (click)="signIn()">
+                    <span *ngIf="!signInForm.disabled">
+                        Sign in
+                    </span>
+                    <mat-progress-spinner *ngIf="signInForm.disabled" [diameter]="24"
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+
+                <button type="button" class="gsi-material-button w-full mt-6" (click)="googleAuth()">
+                    <div class="gsi-material-button-state"></div>
+                    <div class="gsi-material-button-content-wrapper">
+                        <div class="gsi-material-button-icon">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                <path fill="#EA4335"
+                                    d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                                </path>
+                                <path fill="#4285F4"
+                                    d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                                </path>
+                                <path fill="#FBBC05"
+                                    d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                                </path>
+                                <path fill="#34A853"
+                                    d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                                </path>
+                                <path fill="none" d="M0 0h48v48H0z"></path>
+                            </svg>
+                        </div>
+                        <span class="gsi-material-button-contents">Sign in with Google</span>
+                        <span style="display: none;">Sign in with Google</span>
+                    </div>
+                </button>
+
+                <!-- Separator -->
+                <div class="flex items-center mt-8">
+                    <div class="flex-auto mt-px border-t"></div>
+                    <div class="mx-2 text-secondary">Or continue with</div>
+                    <div class="flex-auto mt-px border-t"></div>
+                </div>
+
+                <!-- Single sign-on buttons -->
+                <div class="flex items-center mt-8 space-x-4">
+                    <button class="flex-auto" type="button" mat-stroked-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'feather:facebook'"></mat-icon>
+                    </button>
+                    <button class="flex-auto" type="button" mat-stroked-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'feather:twitter'"></mat-icon>
+                    </button>
+                    <button class="flex-auto" type="button" mat-stroked-button>
+                        <mat-icon class="icon-size-5" [svgIcon]="'feather:github'"></mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
+        <!-- Background - @formatter:off -->
+        <!-- Rings -->
+        <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
+            preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+        <!-- Dots -->
+        <svg class="absolute -top-16 -right-16 text-gray-700" viewBox="0 0 220 192" width="220" height="192"
+            fill="none">
+            <defs>
+                <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0" width="20" height="20"
+                    patternUnits="userSpaceOnUse">
+                    <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
+                </pattern>
+            </defs>
+            <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
+        </svg>
+        <!-- @formatter:on -->
+        <!-- Content -->
+        <div class="z-10 relative w-full max-w-2xl">
+            <div class="text-7xl font-bold leading-none text-gray-100">
+                <div>Welcome to</div>
+                <div>our community</div>
+            </div>
+            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
+                Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
+                Join us and start building your application today.
+            </div>
+            <div class="flex items-center mt-8">
+                <div class="flex flex-0 items-center -space-x-1.5">
+                    <img class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        src="assets/images/avatars/female-18.jpg">
+                    <img class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        src="assets/images/avatars/female-11.jpg">
+                    <img class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        src="assets/images/avatars/male-09.jpg">
+                    <img class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        src="assets/images/avatars/male-16.jpg">
+                </div>
+                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your
+                    turn</div>
+            </div>
+        </div>
+    </div>
+</div>
