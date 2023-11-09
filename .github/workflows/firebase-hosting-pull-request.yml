@@ -14,4 +14,4 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PLANT_DETECTION_7A03E }}'
-          projectId: plant-detection-7a03e
+          projectId: manager-plant-detaction-7a03e
