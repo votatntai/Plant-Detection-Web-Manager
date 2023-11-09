@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist/fuse",
+    "site": "manager-plant-detaction-7a03e",
     "ignore": [
       "firebase.json",
       "**/.*",
