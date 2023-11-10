@@ -11,6 +11,8 @@ import { ClassStudent } from 'app/types/class-student.type';
 import { Class } from 'app/types/class.type';
 import { Pagination } from 'app/types/pagination.type';
 import { ClassService } from '../class.service';
+import { FuseConfigService } from '@fuse/services/config';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'app-class-detail',
@@ -28,6 +30,7 @@ export class ClassDetailComponent implements OnInit {
 
     constructor(
         public matDialogRef: MatDialogRef<ClassDetailComponent>,
+        private fuseConfirmationService: FuseConfirmationService,
         private _classService: ClassService,
     ) { }
 
@@ -37,6 +40,54 @@ export class ClassDetailComponent implements OnInit {
         })
         this._classService.classStudents$.subscribe(student => {
             this.classStudents = student;
+        });
+    }
+
+    openClass() {
+        this.fuseConfirmationService.open({
+            title: 'Are you sure to open this class?',
+            message: 'After class, students can submit reports',
+            actions: {
+                confirm: {
+                    color: 'primary'
+                }
+            }
+        }).afterClosed().subscribe(result => {
+            if (result === 'confirmed') {
+                this._classService.openClass(this.class.id).subscribe();
+            }
+        });
+    }
+
+    closeClass() {
+        this.fuseConfirmationService.open({
+            title: 'Are you sure to close this class?',
+            message: 'After class, students can not submit reports',
+            actions: {
+                confirm: {
+                    color: 'warn'
+                }
+            }
+        }).afterClosed().subscribe(result => {
+            if (result === 'confirmed') {
+                this._classService.closeClass(this.class.id).subscribe();
+            }
+        });
+    }
+
+    approveStudentToJoinClass(id: string) {
+        this.fuseConfirmationService.open({
+            title: 'Are you sure to close this class?',
+            message: 'After class, students can not submit reports',
+            actions: {
+                confirm: {
+                    color: 'warn'
+                }
+            }
+        }).afterClosed().subscribe(result => {
+            if (result === 'confirmed') {
+                this._classService.closeClass(this.class.id).subscribe();
+            }
         });
     }
 }

@@ -128,10 +128,10 @@ export class ClassService {
     /**
 * Reject class
 */
-    openClass(id: string, note: string) {
+    openClass(id: string) {
         return this.classes$.pipe(
             take(1),
-            switchMap((classes) => this._httpClient.put<Class>(this.baseUrl + '/api/classes/' + id, { status: 'Opening', note: note }).pipe(
+            switchMap((classes) => this._httpClient.put<Class>(this.baseUrl + '/api/classes/' + id, { status: 'Opening' }).pipe(
                 map((updatedClass) => {
 
                     // Find and replace updated class
@@ -149,12 +149,12 @@ export class ClassService {
     }
 
     /**
-* slose class
+* Close class
 */
-    closeClass(id: string, note: string) {
+    closeClass(id: string) {
         return this.classes$.pipe(
             take(1),
-            switchMap((classes) => this._httpClient.put<Class>(this.baseUrl + '/api/classes/' + id, { status: 'Closed', note: note }).pipe(
+            switchMap((classes) => this._httpClient.put<Class>(this.baseUrl + '/api/classes/' + id, { status: 'Closed' }).pipe(
                 map((updatedClass) => {
 
                     // Find and replace updated class

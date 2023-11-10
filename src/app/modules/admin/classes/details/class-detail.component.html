@@ -47,13 +47,13 @@
                     <div>Status</div>
                     <div class="flex items-center gap-3">
                         <ng-container *ngIf="class.status == 'Opening'">
-                            <button class="flex items-center">
-                                <mat-icon svgIcon="heroicons_outline:lock-closed"></mat-icon>
+                            <button class="flex items-center" (click)="closeClass()">
+                                <mat-icon class="text-red-500" svgIcon="heroicons_outline:lock-closed"></mat-icon>
                             </button>
                         </ng-container>
                         <ng-container *ngIf="class.status == 'Closed'">
-                            <button class="flex items-center">
-                                <mat-icon svgIcon="heroicons_outline:lock-open"></mat-icon>
+                            <button class="flex items-center" (click)="openClass()">
+                                <mat-icon class="text-green-500" svgIcon="heroicons_outline:lock-open"></mat-icon>
                             </button>
                         </ng-container>
                         <div [class]="class.status | classStatusStyle">{{ class.status }}</div>
@@ -87,6 +87,9 @@
                     <div class="hidden sm:block">
                         Status
                     </div>
+                    <div class="hidden sm:block">
+                        Action
+                    </div>
                 </div>
 
                 <ng-container *ngFor="let classStudent of classStudents">
@@ -111,10 +114,25 @@
 
                         <!-- Phone -->
                         <div class="hidden sm:block">
-                            <!-- <span class="border-2 border-green-700 px-3 rounded-full py-1 text-green-700"> -->
                             <span [class]="classStudent.status | classStudentStatusStyle">
                                 {{ classStudent.status }}
                             </span>
+                        </div>
+
+                        <!-- Action -->
+                        <div class="hidden sm:block">
+                            <div class="flex gap-3 justify-center">
+                                <ng-container *ngIf="classStudent.status == 'Pending Approval'">
+                                    <span>
+                                        <mat-icon class="text-red-500 icon-size-6 cursor-pointer"
+                                            svgIcon="heroicons_outline:trash"></mat-icon>
+                                    </span>
+                                    <span>
+                                        <mat-icon class="text-green-500 icon-size-6 cursor-pointer"
+                                            svgIcon="heroicons_outline:check"></mat-icon>
+                                    </span>
+                                </ng-container>
+                            </div>
                         </div>
 
                     </div>
