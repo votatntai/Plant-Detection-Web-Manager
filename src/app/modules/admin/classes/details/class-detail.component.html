@@ -122,12 +122,13 @@
                         <!-- Action -->
                         <div class="hidden sm:block">
                             <div class="flex gap-3 justify-center">
+                                <span class="cursor-pointer">
+                                    <mat-icon class="text-red-500 icon-size-6 cursor-pointer"
+                                        svgIcon="heroicons_outline:trash"></mat-icon>
+                                </span>
                                 <ng-container *ngIf="classStudent.status == 'Pending Approval'">
-                                    <span>
-                                        <mat-icon class="text-red-500 icon-size-6 cursor-pointer"
-                                            svgIcon="heroicons_outline:trash"></mat-icon>
-                                    </span>
-                                    <span>
+                                    <span class="cursor-pointer"
+                                        (click)="approveStudentToJoinClass(classStudent.student.id)">
                                         <mat-icon class="text-green-500 icon-size-6 cursor-pointer"
                                             svgIcon="heroicons_outline:check"></mat-icon>
                                     </span>

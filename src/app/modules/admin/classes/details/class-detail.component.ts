@@ -46,7 +46,7 @@ export class ClassDetailComponent implements OnInit {
     openClass() {
         this.fuseConfirmationService.open({
             title: 'Are you sure to open this class?',
-            message: 'After class, students can submit reports',
+            message: 'After open the class, students can submit reports',
             actions: {
                 confirm: {
                     color: 'primary'
@@ -62,7 +62,7 @@ export class ClassDetailComponent implements OnInit {
     closeClass() {
         this.fuseConfirmationService.open({
             title: 'Are you sure to close this class?',
-            message: 'After class, students can not submit reports',
+            message: 'After close the class, students can not submit reports',
             actions: {
                 confirm: {
                     color: 'warn'
@@ -75,18 +75,18 @@ export class ClassDetailComponent implements OnInit {
         });
     }
 
-    approveStudentToJoinClass(id: string) {
+    approveStudentToJoinClass(studentId: string) {
         this.fuseConfirmationService.open({
-            title: 'Are you sure to close this class?',
-            message: 'After class, students can not submit reports',
+            title: 'Are you sure to approve this student?',
+            message: 'After approved, students can submit reports and view class information',
             actions: {
                 confirm: {
-                    color: 'warn'
+                    color: 'primary'
                 }
             }
         }).afterClosed().subscribe(result => {
             if (result === 'confirmed') {
-                this._classService.closeClass(this.class.id).subscribe();
+                this._classService.approveStudentToJoinClass(this.class.id, studentId).subscribe();
             }
         });
     }

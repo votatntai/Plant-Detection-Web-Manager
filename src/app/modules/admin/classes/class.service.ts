@@ -178,4 +178,22 @@ export class ClassService {
             }),
         );
     }
+
+    approveStudentToJoinClass(classId: string, studentId: string) {
+        return this.classes$.pipe(
+            take(1),
+            switchMap(() => this._httpClient.put<any>(this.baseUrl + '/api/classes/' + classId + '/approve-student/' + studentId, null).pipe(
+                map((classStudent) => {
+
+                    // Find and replace updated class
+                    var currentClassStudents = this._classStudents.value;
+                    const index = currentClassStudents.findIndex(item => item.student.id === studentId);
+                    currentClassStudents[index] = classStudent;
+                    this._classStudents.next(currentClassStudents);
+
+                    return classStudent;
+                })
+            ))
+        )
+    }
 }
