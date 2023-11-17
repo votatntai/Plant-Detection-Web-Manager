@@ -151,13 +151,17 @@ export class AuthService {
                     this.accessToken = response.accessToken;
                 }
 
-                this.getUser().subscribe();
+                this.getUser().subscribe(user => {
+                    if (user) {
+                        // Set the authenticated flag to true
+                        this._authenticated = true;
+                        // Return true
+                        return of(true);
+                    }
+                });
 
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Return true
-                return of(true);
+                // Return false
+                return of(false);
             }),
         );
     }
@@ -170,10 +174,7 @@ export class AuthService {
                 of(false),
             ),
             switchMap((user: User) => {
-                if (user) {
-                    this._userService.user = user;
-                }
-
+                this._userService.user = user;
                 // Return true
                 return of(true);
             }),

@@ -1,5 +1,5 @@
 import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _dashboardService: DashboardService,
+        private _changeDetectorRef: ChangeDetectorRef,
         private _userService: UserService,
         private _router: Router,
     ) {
@@ -55,6 +56,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
+        // Get the user
+        this._userService.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((user: User) => {
+                this.user = user;
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
         // Get the data
         this._dashboardService.data$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -66,10 +76,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this._prepareChartData();
             });
 
-        // Get the user
-        this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe(user => {
-            this.user = user;
-        });
 
         // Attach SVG fill fixer to all ApexCharts
         window['Apex'] = {

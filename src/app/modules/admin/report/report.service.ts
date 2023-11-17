@@ -47,15 +47,14 @@ export class ReportService {
  * @param order
  * @param search
  */
-    getReports(pageNumber: number = 0, pageSize: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search?: string, status?: string):
+    getReports(pageNumber: number = 0, pageSize: number = 10, search?: string, status?: string, classId?: string,):
         Observable<{ pagination: Pagination; data: Report[] }> {
-        return this._httpClient.get<{ pagination: Pagination; data: Report[] }>(this.baseUrl + '/api/reports', {
+        return this._httpClient.get<{ pagination: Pagination; data: Report[] }>(this.baseUrl + '/api/reports/manager', {
             params: {
                 pageSize: pageSize,
                 pageNumber: pageNumber,
-                sort,
-                order,
-                ...(status !== undefined && { status }),
+                ...(classId !== undefined && classId !== null && { classId }),
+                ...(status !== undefined && status !== null && { status }),
                 ...(search !== undefined && search !== null && { name: search }),
             }
         }).pipe(

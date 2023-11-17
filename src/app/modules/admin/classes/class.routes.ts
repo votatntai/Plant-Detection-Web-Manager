@@ -10,7 +10,7 @@ export default [
         path: '',
         component: ClassComponent,
         resolve: {
-            data: () => inject(ClassService).getClasses(),
+            classses: () => inject(ClassService).getClasses(),
         },
         children: [
             {

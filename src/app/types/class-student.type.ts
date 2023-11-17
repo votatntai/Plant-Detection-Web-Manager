@@ -5,5 +5,6 @@ export interface ClassStudent {
     joinAt?: string,
     status: string,
     description?: string,
+    reports: number,
     student: Student
 }

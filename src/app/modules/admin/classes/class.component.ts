@@ -71,6 +71,8 @@ export class ClassComponent implements OnInit, AfterViewInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: Pagination) => {
 
+                console.log(pagination.pageSize);
+
                 // Update the pagination
                 this.pagination = pagination;
 
@@ -108,7 +110,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
             merge(this._sort.sortChange, this._paginator.page).pipe(
                 switchMap(() => {
                     this.isLoading = true;
-                    return this._classService.getClasses(0, this._paginator.pageSize, this._sort.active, this._sort.direction, this.searchInputControl.value, this.status);
+                    return this._classService.getClasses(0, this._paginator.pageSize, this.searchInputControl.value, this.status);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -126,7 +128,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
                 switchMap((query) => {
                     this.query = query;
                     this.isLoading = true;
-                    return this._classService.getClasses(0, this._paginator.pageSize, this._sort.active, this._sort.direction, query, this.status);
+                    return this._classService.getClasses(0, this._paginator.pageSize, query, this.status);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -149,7 +151,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
         if (event.value === 'All') {
             this.status = undefined;
         }
-        this._classService.getClasses(0, this._paginator.pageSize, this._sort.active, this._sort.direction, this.query, this.status).subscribe();
+        this._classService.getClasses(0, this._paginator.pageSize, this.query, this.status).subscribe();
     }
 
     openCreateClassDialog() {

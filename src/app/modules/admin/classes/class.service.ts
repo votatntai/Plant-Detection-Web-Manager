@@ -56,16 +56,14 @@ export class ClassService {
  * @param order
  * @param search
  */
-    getClasses(pageNumber: number = 0, pageSize: number = 10, sort: string = 'name', order: 'asc' | 'desc' | '' = 'asc', search?: string, status?: string):
+    getClasses(pageNumber: number = 0, pageSize: number = 10, search?: string, status?: string):
         Observable<{ pagination: Pagination; data: Class[] }> {
         return this._httpClient.get<{ pagination: Pagination; data: Class[] }>(this.baseUrl + '/api/classes/managers', {
             params: {
                 pageSize: pageSize,
                 pageNumber: pageNumber,
-                sort,
-                order,
-                ...(status !== undefined && { status }),
-                ...(search !== undefined && { name: search }),
+                ...(status !== undefined && status !== null && { status }),
+                ...(search !== undefined && search !== null && { name: search }),
             }
         }).pipe(
             tap((response) => {

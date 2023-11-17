@@ -16,8 +16,15 @@
                     <!-- Actions -->
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 gap-3">
                         <mat-form-field class="fuse-mat-dense fuse-mat-rounded min-w-64">
+                            <mat-select [value]="'All'" (selectionChange)="classSelectionChange($event)">
+                                <mat-option value="All">All Class</mat-option>
+                                <mat-option *ngFor="let class of classes" [value]="class.id">{{ class.name
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="fuse-mat-dense fuse-mat-rounded min-w-64">
                             <mat-select [value]="'All'" (selectionChange)="statusSelectionChange($event)">
-                                <mat-option value="All">All</mat-option>
+                                <mat-option value="All">All Status</mat-option>
                                 <mat-option value="Pending">Pending</mat-option>
                                 <mat-option value="Approved">Approved</mat-option>
                                 <mat-option value="Rejected">Rejected</mat-option>
@@ -84,7 +91,7 @@
 
                                             <!-- Phone -->
                                             <div class="hidden sm:block">
-                                                {{report.label}}
+                                                {{report.label.name }}
                                             </div>
 
                                             <!-- Phone -->

@@ -17,6 +17,8 @@ import { Report } from 'app/types/report.type';
 import { Observable, Subject, debounceTime, map, merge, switchMap, takeUntil } from 'rxjs';
 import { ReportDetailComponent } from './details/report-detail.component';
 import { ReportService } from './report.service';
+import { Class } from 'app/types/class.type';
+import { ClassService } from '../classes/class.service';
 
 @Component({
     selector: 'app-report',
@@ -42,6 +44,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) private _sort: MatSort;
 
     reports$: Observable<Report[]>;
+    classes: Class[];
 
     flashMessage: 'success' | 'error' | null = null;
     message: string = null;
@@ -50,17 +53,29 @@ export class ReportComponent implements OnInit, AfterViewInit {
     pagination: Pagination;
     query: string;
     status: string;
+    selectedClassId: string;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(
         private _reportService: ReportService,
+        private _classService: ClassService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _dialog: MatDialog,
         private router: Router
     ) { }
 
     ngOnInit() {
+        // Get list of class
+        this._classService.classes$.pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((classes: Class[]) => {
+
+                // Update the classes
+                this.classes = classes;
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
 
         // Get the products
         this.reports$ = this._reportService.reports$;
@@ -107,7 +122,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
             merge(this._sort.sortChange, this._paginator.page).pipe(
                 switchMap(() => {
                     this.isLoading = true;
-                    return this._reportService.getReports(this._paginator.pageIndex, this._paginator.pageSize, this._sort.active, this._sort.direction, this.searchInputControl.value, this.status);
+                    return this._reportService.getReports(this._paginator.pageIndex, this._paginator.pageSize, this.searchInputControl.value, this.status);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -125,7 +140,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
                 switchMap((query) => {
                     this.query = query;
                     this.isLoading = true;
-                    return this._reportService.getReports(0, this._paginator.pageSize, this._sort.active, this._sort.direction, query, this.status);
+                    return this._reportService.getReports(0, this._paginator.pageSize, query, this.status, this.selectedClassId);
                 }),
                 map(() => {
                     this.isLoading = false;
@@ -144,11 +159,19 @@ export class ReportComponent implements OnInit, AfterViewInit {
         });
     }
 
+    classSelectionChange(event: any) {
+        this.selectedClassId = event.value;
+        if (event.value === 'All') {
+            this.selectedClassId = undefined;
+        }
+        this._reportService.getReports(0, this._paginator.pageSize, null, null, this.selectedClassId).subscribe();
+    }
+
     statusSelectionChange(event: any) {
         this.status = event.value;
         if (event.value === 'All') {
             this.status = undefined;
         }
-        this._reportService.getReports(0, this._paginator.pageSize, this._sort.active, this._sort.direction, this.query, this.status).subscribe();
+        this._reportService.getReports(0, this._paginator.pageSize, this.query, this.status, this.selectedClassId).subscribe();
     }
 }

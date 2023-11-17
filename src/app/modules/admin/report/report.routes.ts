@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { ReportDetailComponent } from './details/report-detail.component';
 import { ReportComponent } from './report.component';
 import { ReportService } from './report.service';
+import { ClassService } from '../classes/class.service';
 
 export default [
     {
@@ -10,6 +11,7 @@ export default [
         component: ReportComponent,
         resolve: {
             data: () => inject(ReportService).getReports(),
+            classses: () => inject(ClassService).getClasses(),
         },
         children: [
             {
