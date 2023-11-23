@@ -44,6 +44,16 @@
                     <div>{{ class.createAt | date:'dd-MM-YYYY' }}</div>
                 </div>
                 <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Labels</div>
+                    <div class="flex flex-wrap gap-3">
+                        <ng-container *ngFor="let classLabel of class.classLabels">
+                            <div
+                                class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                                {{ classLabel.label.name }}</div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between py-3">
                     <div>Status</div>
                     <div class="flex items-center gap-3">
                         <ng-container *ngIf="class.status == 'Opening'">

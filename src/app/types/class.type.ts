@@ -1,3 +1,4 @@
+import { ClassLabel } from "./class-label";
 import { Manager } from "./manager.type";
 
 export interface Class {
@@ -10,5 +11,6 @@ export interface Class {
     numberOfMember: number,
     status: string,
     manager: Manager,
+    classLabels: ClassLabel[],
     thumbnailUrl: string
 }

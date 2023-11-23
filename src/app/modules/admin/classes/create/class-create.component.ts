@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { QuillEditorComponent } from 'ngx-quill';
 import { ClassService } from '../class.service';
+import { Label } from 'app/types/label.type';
+import { LabelService } from '../../label/label.service';
 
 @Component({
     selector: 'app-create-class',
@@ -23,6 +25,7 @@ export class CreateClassComponent implements OnInit {
 
     selectedImage: File;
     objectURL: (string | null);
+    labels: Label[];
 
     createClassForm: UntypedFormGroup;
     copyFields: { cc: boolean; bcc: boolean } = {
@@ -43,7 +46,8 @@ export class CreateClassComponent implements OnInit {
     constructor(
         public matDialogRef: MatDialogRef<CreateClassComponent>,
         private _formBuilder: UntypedFormBuilder,
-        private _classService: ClassService
+        private _classService: ClassService,
+        private _labelService: LabelService,
     ) {
     }
 
@@ -55,10 +59,16 @@ export class CreateClassComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+
+        this._labelService.labels$.subscribe(labels => {
+            this.labels = labels
+        });
+
         // Create the form
         this.createClassForm = this._formBuilder.group({
             name: [null, [Validators.required]],
             description: [null, [Validators.required]],
+            classLabels: [null, [Validators.required]],
             code: [null, [Validators.required]],
             numberOfMember: [null, Validators.required],
             thumbnail: [null, [Validators.required]],
@@ -83,21 +93,28 @@ export class CreateClassComponent implements OnInit {
     }
 
     onSubmit() {
-        // Tạo đối tượng FormData
-        const formData = new FormData();
+        if (this.createClassForm.valid) {
+            // Tạo đối tượng FormData
+            const formData = new FormData();
 
-        // Lấy các giá trị khác từ biểu mẫu và thêm vào formData
-        formData.append('name', this.createClassForm.get('name').value);
-        formData.append('code', this.createClassForm.get('code').value);
-        formData.append('description', this.createClassForm.get('description').value);
-        formData.append('numberOfMember', this.createClassForm.get('numberOfMember').value);
-        formData.append(`thumbnail`, this.selectedImage);
+            // Lấy các giá trị khác từ biểu mẫu và thêm vào formData
+            var labelIds = this.createClassForm.get('classLabels').value;
+            labelIds.forEach(function (labelIds, i) {
+                formData.append('classLabels[' + i + '][labelId]', labelIds);
+            });
+            formData.append('name', this.createClassForm.get('name').value);
+            formData.append('code', this.createClassForm.get('code').value);
+            formData.append('description', this.createClassForm.get('description').value);
+            formData.append('numberOfMember', this.createClassForm.get('numberOfMember').value);
+            formData.append(`thumbnail`, this.selectedImage);
 
-        // Gửi biểu mẫu dưới dạng multipart/form-data
-        this._classService.createClass(formData).subscribe(result => {
-            if (result) {
-                this.matDialogRef.close();
-            }
-        });
+            // Gửi biểu mẫu dưới dạng multipart/form-data
+            this._classService.createClass(formData).subscribe(result => {
+                if (result) {
+                    this.matDialogRef.close();
+                }
+            });
+        }
     }
+
 }

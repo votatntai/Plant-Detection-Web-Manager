@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClassStudent } from 'app/types/class-student.type';
 import { Class } from 'app/types/class.type';
+import { Label } from 'app/types/label.type';
 import { Pagination } from 'app/types/pagination.type';
 import { environment } from 'environments/environment.development';
 import { BehaviorSubject, map, Observable, switchMap, take, tap } from 'rxjs';

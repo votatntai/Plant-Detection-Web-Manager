@@ -4,6 +4,7 @@ import { ClassService } from './class.service';
 import { inject } from '@angular/core';
 import { ClassDetailComponent } from './details/class-detail.component';
 import { initialDataResolver } from './details/class-detail.resolvers';
+import { LabelService } from '../label/label.service';
 
 export default [
     {
@@ -11,6 +12,7 @@ export default [
         component: ClassComponent,
         resolve: {
             classses: () => inject(ClassService).getClasses(),
+            labels: () => inject(LabelService).getLabels(),
         },
         children: [
             {

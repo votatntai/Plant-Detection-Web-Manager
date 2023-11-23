@@ -32,11 +32,22 @@
             </div>
 
             <div class="col-span-2 w-full">
-                <mat-form-field class="w-full">
-                    <mat-label>Name</mat-label>
-                    <input class="w-full" matInput [formControlName]="'name'">
-                </mat-form-field>
+                <div class="flex gap-4 w-full">
 
+                    <mat-form-field class="w-full">
+                        <mat-label>Name</mat-label>
+                        <input class="w-full" matInput [formControlName]="'name'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Labels</mat-label>
+                        <mat-select [formControlName]="'classLabels'" multiple>
+                            <ng-container *ngFor="let label of labels">
+                                <mat-option [value]="label.id">{{label.name}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
                 <div class="flex gap-4 w-full">
                     <!-- Code -->
                     <mat-form-field class="w-full">
@@ -60,10 +71,6 @@
         <!-- Actions -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">
             <div class="-ml-2">
-                <!-- Attach file -->
-                <button mat-icon-button>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:paper-clip'"></mat-icon>
-                </button>
             </div>
 
             <div class="flex items-center mt-4 sm:mt-0">

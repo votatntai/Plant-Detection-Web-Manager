@@ -71,8 +71,6 @@ export class ClassComponent implements OnInit, AfterViewInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((pagination: Pagination) => {
 
-                console.log(pagination.pageSize);
-
                 // Update the pagination
                 this.pagination = pagination;
 
@@ -110,7 +108,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
             merge(this._sort.sortChange, this._paginator.page).pipe(
                 switchMap(() => {
                     this.isLoading = true;
-                    return this._classService.getClasses(0, this._paginator.pageSize, this.searchInputControl.value, this.status);
+                    return this._classService.getClasses(this._paginator.pageIndex, this._paginator.pageSize, this.searchInputControl.value, this.status);
                 }),
                 map(() => {
                     this.isLoading = false;
