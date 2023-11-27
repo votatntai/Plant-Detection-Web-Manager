@@ -195,4 +195,27 @@ export class ClassService {
             ))
         )
     }
+
+    /**
+* Update class model
+*/
+    updateClassModel(id: string, body: any) {
+        return this.classes$.pipe(
+            take(1),
+            switchMap((classes) => this._httpClient.put(this.baseUrl + '/api/predictions/model/update/class/' + id, body).pipe(
+                map((updatedClass) => {
+
+                    // Find and replace updated class
+                    // const index = classes.findIndex(item => item.id === id);
+                    // classes[index] = updatedClass;
+                    // this._classes.next(classes);
+
+                    // Update class
+                    // this._class.next(updatedClass);
+
+                    return updatedClass;
+                })
+            ))
+        )
+    }
 }

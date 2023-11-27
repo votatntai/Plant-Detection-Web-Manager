@@ -71,7 +71,6 @@ export class CreateClassComponent implements OnInit {
             classLabels: [null, [Validators.required]],
             code: [null, [Validators.required]],
             numberOfMember: [null, Validators.required],
-            thumbnail: [null, [Validators.required]],
         });
 
     }
@@ -93,21 +92,21 @@ export class CreateClassComponent implements OnInit {
     }
 
     onSubmit() {
+        // Tạo đối tượng FormData
+        const formData = new FormData();
+
+        // Lấy các giá trị khác từ biểu mẫu và thêm vào formData
+        var labelIds = this.createClassForm.get('classLabels').value;
+        labelIds.forEach(function (labelIds, i) {
+            formData.append('classLabels[' + i + '][labelId]', labelIds);
+        });
+        formData.append('name', this.createClassForm.get('name').value);
+        formData.append('code', this.createClassForm.get('code').value);
+        formData.append('description', this.createClassForm.get('description').value);
+        formData.append('numberOfMember', this.createClassForm.get('numberOfMember').value);
+        formData.append(`thumbnail`, this.selectedImage);
+
         if (this.createClassForm.valid) {
-            // Tạo đối tượng FormData
-            const formData = new FormData();
-
-            // Lấy các giá trị khác từ biểu mẫu và thêm vào formData
-            var labelIds = this.createClassForm.get('classLabels').value;
-            labelIds.forEach(function (labelIds, i) {
-                formData.append('classLabels[' + i + '][labelId]', labelIds);
-            });
-            formData.append('name', this.createClassForm.get('name').value);
-            formData.append('code', this.createClassForm.get('code').value);
-            formData.append('description', this.createClassForm.get('description').value);
-            formData.append('numberOfMember', this.createClassForm.get('numberOfMember').value);
-            formData.append(`thumbnail`, this.selectedImage);
-
             // Gửi biểu mẫu dưới dạng multipart/form-data
             this._classService.createClass(formData).subscribe(result => {
                 if (result) {

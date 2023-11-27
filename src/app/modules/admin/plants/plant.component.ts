@@ -17,6 +17,7 @@ import { Pagination } from 'app/types/pagination.type';
 import { Observable, Subject, debounceTime, map, merge, switchMap, takeUntil } from 'rxjs';
 import { PlantService } from './plant.service';
 import { CreatePlantComponent } from './create/create-plant.component';
+import { PlantDetailComponent } from './detail/plant-detail.component';
 
 @Component({
     selector: 'app-plant',
@@ -143,6 +144,12 @@ export class PlantComponent implements OnInit, AfterViewInit {
 
     openCreatePlantDialog() {
         this._dialog.open(CreatePlantComponent, {
+            width: '960px',
+        })
+    }
+
+    openPlantDetail() {
+        this._dialog.open(PlantDetailComponent, {
             width: '960px',
         })
     }
