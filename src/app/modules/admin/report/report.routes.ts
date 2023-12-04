@@ -11,7 +11,7 @@ export default [
         component: ReportComponent,
         resolve: {
             data: () => inject(ReportService).getReports(),
-            classses: () => inject(ClassService).getClasses(),
+            classses: () => inject(ClassService).getManagerClasses(),
         },
         children: [
             {

@@ -75,6 +75,35 @@ export class ClassService {
     }
 
     /**
+* Get available classes
+*
+*
+* @param page
+* @param size
+* @param sort
+* @param order
+* @param search
+*/
+    getManagerClasses(pageNumber: number = 0, pageSize: number = 10, search?: string, status?: string):
+        Observable<{ pagination: Pagination; data: Class[] }> {
+        return this._httpClient.get<{ pagination: Pagination; data: Class[] }>(this.baseUrl + '/api/classes/managers', {
+            params: {
+                pageSize: pageSize,
+                pageNumber: pageNumber,
+                ...(status !== undefined && status !== null && { status }),
+                ...(search !== undefined && search !== null && { name: search }),
+            }
+        }).pipe(
+            tap((response) => {
+                console.log(response);
+
+                this._pagination.next(response.pagination);
+                this._classes.next(response.data);
+            }),
+        );
+    }
+
+    /**
 * Create class
 */
     createClass(data) {

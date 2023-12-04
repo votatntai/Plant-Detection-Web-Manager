@@ -11,6 +11,8 @@ import { QuillEditorComponent } from 'ngx-quill';
 import { ClassService } from '../class.service';
 import { Label } from 'app/types/label.type';
 import { LabelService } from '../../label/label.service';
+import { FuseConfigService } from '@fuse/services/config';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'app-create-class',
@@ -46,6 +48,7 @@ export class CreateClassComponent implements OnInit {
     constructor(
         public matDialogRef: MatDialogRef<CreateClassComponent>,
         private _formBuilder: UntypedFormBuilder,
+        private _fuseConfirmationService: FuseConfirmationService,
         private _classService: ClassService,
         private _labelService: LabelService,
     ) {
@@ -111,6 +114,29 @@ export class CreateClassComponent implements OnInit {
             this._classService.createClass(formData).subscribe(result => {
                 if (result) {
                     this.matDialogRef.close();
+                }
+            }, error => {
+                if (error.status === 409 && error.error === 'The class code already exists') {
+                    this._fuseConfirmationService.open({
+                        title: 'The class code already exists',
+                        message: 'The class code already exists',
+                        actions: {
+                            cancel: {
+                                show: false
+                            }
+                        }
+                    })
+                }
+                if (error.status === 409 && error.error === 'The class name already exists') {
+                    this._fuseConfirmationService.open({
+                        title: 'The class name already exists',
+                        message: 'The class name already exists',
+                        actions: {
+                            cancel: {
+                                show: false
+                            }
+                        }
+                    })
                 }
             });
         }

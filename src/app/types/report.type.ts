@@ -1,3 +1,4 @@
+import { Class } from "./class.type";
 import { Label } from "./label.type";
 import { Student } from "./student.type";
 
@@ -9,5 +10,6 @@ export interface Report {
     description?: string,
     status: string,
     createAt: string,
+    class: Class,
     note?: string
 }
