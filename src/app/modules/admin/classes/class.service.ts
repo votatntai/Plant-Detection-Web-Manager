@@ -95,8 +95,6 @@ export class ClassService {
             }
         }).pipe(
             tap((response) => {
-                console.log(response);
-
                 this._pagination.next(response.pagination);
                 this._classes.next(response.data);
             }),

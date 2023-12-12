@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { QuillEditorComponent } from 'ngx-quill';
 import { PlantService } from '../plant.service';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'app-create-plant',
@@ -44,7 +45,8 @@ export class CreatePlantComponent implements OnInit {
     constructor(
         public matDialogRef: MatDialogRef<CreatePlantComponent>,
         private _formBuilder: UntypedFormBuilder,
-        private _plantService: PlantService
+        private _plantService: PlantService,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {
     }
 
@@ -103,9 +105,12 @@ export class CreatePlantComponent implements OnInit {
         formData.append('code', this.createPlantForm.get('code').value);
 
         // Gửi biểu mẫu dưới dạng multipart/form-data
-        this._plantService.createPlant(formData).subscribe();
+        this._plantService.createPlant(formData).subscribe(result => {
+            if (result) {
+                this.matDialogRef.close();
+            }
+        });
     }
-
 
     /**
      * Save and close

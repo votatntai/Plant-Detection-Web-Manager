@@ -74,11 +74,44 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            // { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
             { path: 'dashboards', loadChildren: () => import('app/modules/admin/dashboards/dashboard.routes') },
             { path: 'configurations', loadChildren: () => import('app/modules/admin/configurations/configuration.routes') },
             { path: 'classes', loadChildren: () => import('app/modules/admin/classes/class.routes') },
             { path: 'reports', loadChildren: () => import('app/modules/admin/report/report.routes') },
+        ]
+    },
+
+    // Apps routes
+    {
+        path: 'apps',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver
+        },
+        children: [
+            { path: 'files', loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.routes') },
+        ]
+    },
+
+    // Paegs routes
+    {
+        path: 'pages',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver
+        },
+        children: [
+            // Error
+            {
+                path: 'error', children: [
+                    { path: '404', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.routes') },
+                    { path: '500', loadChildren: () => import('app/modules/admin/pages/error/error-500/error-500.routes') }
+                ]
+            },
         ]
     },
 
@@ -94,5 +127,9 @@ export const appRoutes: Route[] = [
         children: [
             { path: 'plants', loadChildren: () => import('app/modules/admin/plants/plant.routes') },
         ]
-    }
+    },
+
+    // 404 & Catch all
+    { path: '404', pathMatch: 'full', loadChildren: () => import('app/modules/admin/pages/error/error-404/error-404.routes') },
+    { path: '**', redirectTo: '404' }
 ];

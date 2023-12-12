@@ -47,16 +47,20 @@ export class LabelService {
  * @param order
  * @param search
  */
-    getLabels(pageNumber: number = 0, pageSize: number = 10, search?: string):
+    getLabels(pageNumber: number = 0, pageSize: number = 10, classId?: string, search?: string):
         Observable<{ pagination: Pagination; data: Label[] }> {
+        var params = {
+            pageSize: pageSize,
+            pageNumber: pageNumber,
+            ...(classId !== undefined && classId !== null && { classId: classId }),
+            ...(search !== undefined && search !== null && { name: search }),
+        };
+
         return this._httpClient.get<{ pagination: Pagination; data: Label[] }>(this.baseUrl + '/api/labels', {
-            params: {
-                pageSize: pageSize,
-                pageNumber: pageNumber,
-                ...(search !== undefined && search !== null && { name: search }),
-            }
+            params
         }).pipe(
             tap((response) => {
+                console.log(classId);
                 this._pagination.next(response.pagination);
                 this._labels.next(response.data);
             }),

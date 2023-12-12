@@ -1,0 +1,42 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+        <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+
+            <div
+                class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+                <div
+                    class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+                    <!-- Loader -->
+                    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+                        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+                    </div>
+                    <!-- Title -->
+                    <div class="text-4xl font-extrabold tracking-tight">Images</div>
+                    <!-- Actions -->
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 gap-3">
+                        <!-- <button mat-raised-button [color]="'primary'">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        </button> -->
+                        <!-- Search -->
+                        <!-- <mat-form-field class="fuse-mat-dense fuse-mat-rounded min-w-64" [subscriptSizing]="'dynamic'">
+                            <mat-icon class="icon-size-5" matPrefix
+                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
+                                [placeholder]="'Tìm kiếm'">
+                        </mat-form-field> -->
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-8 w-full flex flex-wrap gap-3 overflow-y-scroll justify-center">
+                    <ng-container *ngFor="let report of reports$ | async">
+                        <!-- Hiển thị thông tin từ mỗi report -->
+                        <img [src]="report.imageUrl" alt="" class="w-50 h-50 object-cover rounded">
+                        <!-- ... -->
+                    </ng-container>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

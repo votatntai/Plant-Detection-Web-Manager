@@ -20,9 +20,24 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'reports',
         title: 'Reports',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:document-chart-bar',
-        link: '/reports'
+        children: [
+            {
+                id: 'list',
+                title: 'Reports Management',
+                type: 'basic',
+                icon: 'heroicons_outline:queue-list',
+                link: '/reports/list'
+            },
+            {
+                id: 'files',
+                title: 'Report Files',
+                type: 'basic',
+                icon: 'heroicons_outline:document-duplicate',
+                link: '/reports/classes'
+            },
+        ],
     },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -44,9 +59,24 @@ export const compactNavigation: FuseNavigationItem[] = [
     {
         id: 'reports',
         title: 'Reports',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:document-chart-bar',
-        link: '/reports'
+        children: [
+            {
+                id: 'list',
+                title: 'Reports Management',
+                type: 'basic',
+                icon: 'heroicons_outline:queue-list',
+                link: '/reports/list'
+            },
+            {
+                id: 'files',
+                title: 'Report Files',
+                type: 'basic',
+                icon: 'heroicons_outline:document-duplicate',
+                link: '/reports/classes'
+            },
+        ],
     },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
@@ -68,9 +98,24 @@ export const futuristicNavigation: FuseNavigationItem[] = [
     {
         id: 'reports',
         title: 'Reports',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:document-chart-bar',
-        link: '/reports'
+        children: [
+            {
+                id: 'list',
+                title: 'Reports Management',
+                type: 'basic',
+                icon: 'heroicons_outline:queue-list',
+                link: '/reports/list'
+            },
+            {
+                id: 'files',
+                title: 'Report Files',
+                type: 'basic',
+                icon: 'heroicons_outline:document-duplicate',
+                link: '/reports/classes'
+            },
+        ],
     },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -92,8 +137,23 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     {
         id: 'reports',
         title: 'Reports',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:document-chart-bar',
-        link: '/reports'
+        children: [
+            {
+                id: 'list',
+                title: 'Reports Management',
+                type: 'basic',
+                icon: 'heroicons_outline:queue-list',
+                link: '/reports/list'
+            },
+            {
+                id: 'files',
+                title: 'Report Files',
+                type: 'basic',
+                icon: 'heroicons_outline:document-duplicate',
+                link: '/reports/classes'
+            },
+        ],
     },
 ];

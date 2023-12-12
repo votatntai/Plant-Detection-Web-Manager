@@ -65,6 +65,24 @@ export class ReportService {
         );
     }
 
+    getReportsByLabelId(pageNumber: number = 0, pageSize: number = 10, labelId?: string, classId?: string):
+        Observable<{ pagination: Pagination; data: Report[] }> {
+        return this._httpClient.get<{ pagination: Pagination; data: Report[] }>(this.baseUrl + '/api/reports', {
+            params: {
+                pageSize: pageSize,
+                pageNumber: pageNumber,
+                ...(labelId !== undefined && labelId !== null && { labelId }),
+                status: 'Approved',
+                classId: classId
+            }
+        }).pipe(
+            tap((response) => {
+                this._pagination.next(response.pagination);
+                this._reports.next(response.data);
+            }),
+        );
+    }
+
     /**
 * Create report
 */
