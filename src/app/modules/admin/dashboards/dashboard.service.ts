@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Dashboard } from 'app/types/dashboard.type';
+import { environment } from 'environments/environment.development';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-    private _data: BehaviorSubject<any> = new BehaviorSubject(null);
+    baseUrl = environment.baseUrl;
+
+    private _data: BehaviorSubject<Dashboard> = new BehaviorSubject(null);
 
     /**
      * Constructor
@@ -30,9 +34,9 @@ export class DashboardService {
     /**
      * Get data
      */
-    getData(): Observable<any> {
-        return this._httpClient.get('api/dashboards/project').pipe(
-            tap((response: any) => {
+    getData(): Observable<Dashboard> {
+        return this._httpClient.get(this.baseUrl + '/api/dashboards/managers').pipe(
+            tap((response: Dashboard) => {
                 this._data.next(response);
             }),
         );
